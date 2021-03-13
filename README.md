@@ -1,0 +1,2 @@
+# LightHouse_Automatic_Shutdown
+腾讯云轻量服务流量超出限制自动关机
