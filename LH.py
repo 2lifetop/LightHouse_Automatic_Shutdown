@@ -42,7 +42,7 @@ try:
         print (i+1,"：",InstanceId,":","已使用：",round(s3['TrafficUsed']/GB,2),"总流量：",round(s3['TrafficPackageTotal']/GB,2),"剩余：",round(s3['TrafficPackageRemaining']/GB,2))
         #实例流量超出限制自动关闭
 
-        if (round(s3['TrafficUsed']/GB,2)/round(s3['TrafficPackageTotal']/GB,2)>percent):
+        if (round(s3['TrafficUsed']/GB,2)/round(s3['TrafficPackageTotal']/GB,2)<percent):
             print("剩余流量充足")
         else:
             print(InstanceId,":","流量超出限制，自动关闭")
