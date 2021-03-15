@@ -57,6 +57,6 @@ try:
             print(resp_Stop.to_json_string())
         #添加时间戳
         print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-        print ("-------------------")
+        print ("--------------------")
 except TencentCloudSDKException as err: 
     print(err) 
