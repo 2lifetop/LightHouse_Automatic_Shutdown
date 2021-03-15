@@ -7,9 +7,9 @@ from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentClo
 from tencentcloud.lighthouse.v20200324 import lighthouse_client, models
 try:
     #参数
-    SecretId="AKID034t6D85sWIC9FQ92u6n4BTo8Lu5hGnV"
-    SecretKey="uA53FVaCjbMXXUO3aNDsHVq5B6pW4qWK"
-    region="ap-shanghai"
+    SecretId=""
+    SecretKey=""
+    region=""
     percent= 0.95
 
     # 以下不用管
