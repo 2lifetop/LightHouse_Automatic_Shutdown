@@ -1,4 +1,5 @@
 import json
+import time
 from tencentcloud.common import credential
 from tencentcloud.common.profile.client_profile import ClientProfile
 from tencentcloud.common.profile.http_profile import HttpProfile
@@ -6,9 +7,9 @@ from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentClo
 from tencentcloud.lighthouse.v20200324 import lighthouse_client, models
 try:
     #参数
-    SecretId=""
-    SecretKey=""
-    region=""
+    SecretId="AKID034t6D85sWIC9FQ92u6n4BTo8Lu5hGnV"
+    SecretKey="uA53FVaCjbMXXUO3aNDsHVq5B6pW4qWK"
+    region="ap-shanghai"
     percent= 0.95
 
     # 以下不用管
@@ -53,6 +54,9 @@ try:
             params_Stop.setdefault("InstanceIds",[]).append(InstanceId)
             req_Stop.from_json_string(json.dumps(params_Stop))
             resp_Stop = client.StopInstances(req_Stop) 
-            print(resp_Stop.to_json_string()) 
+            print(resp_Stop.to_json_string())
+        #添加时间戳
+        print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        print ("-------------------")
 except TencentCloudSDKException as err: 
     print(err) 
