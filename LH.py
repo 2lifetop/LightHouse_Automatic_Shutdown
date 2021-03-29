@@ -26,7 +26,6 @@ try:
     #获取实例列表
     req_instances = models.DescribeInstancesRequest()
     params = {}
-    params_state={}
     req_instances.from_json_string(json.dumps(params))
     resp_instances = client.DescribeInstances(req_instances) 
     s1=json.loads(resp_instances.to_json_string())['InstanceSet']
