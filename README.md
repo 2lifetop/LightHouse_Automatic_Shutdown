@@ -54,6 +54,8 @@ crontab -e
 ## 输出
 
 ![](https://img.jpggod.com/file/jpggod/2021/03/29/cd072a6393deac77d09acb6695ea58af.png)
+TG酱
+![](https://img.jpggod.com/file/jpggod/2021/03/29/5bc2de7b70e91cf7e1bda802c91ff325.png)
 
 ## 更多功能
 
