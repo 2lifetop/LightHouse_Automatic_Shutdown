@@ -1,5 +1,6 @@
 import json
 import time
+import requests
 from tencentcloud.common import credential
 from tencentcloud.common.profile.client_profile import ClientProfile
 from tencentcloud.common.profile.http_profile import HttpProfile
@@ -11,6 +12,8 @@ try:
     SecretKey=""
     region=""
     percent= 0.95
+    tgBotUrl="https://dianbao.vercel.app/send/"
+    tg_token=""
 
     # 以下不用管
     cred = credential.Credential(SecretId,SecretKey)
@@ -22,15 +25,14 @@ try:
     client = lighthouse_client.LighthouseClient(cred, region, clientProfile)
     #获取实例列表
     req_instances = models.DescribeInstancesRequest()
-    params = {
-
-    }
+    params = {}
+    params_state={}
     req_instances.from_json_string(json.dumps(params))
     resp_instances = client.DescribeInstances(req_instances) 
     s1=json.loads(resp_instances.to_json_string())['InstanceSet']
     for j in range (len(s1)):
-        params.setdefault("InstanceIds",[]).append(s1[j]['InstanceId'])
-
+        params.setdefault("InstanceIds",[]).append(s1[j]['InstanceId'])#获取实例ID        
+    
     #获取实例流量
     req = models.DescribeInstancesTrafficPackagesRequest()
     req.from_json_string(json.dumps(params))  
@@ -39,22 +41,38 @@ try:
     GB=1024*1024*1024
     for i in range (len(s2)):
         InstanceId= s2[i]['InstanceId']
-        s3= s2[i]['TrafficPackageSet'][0]          
-        print (i+1,"：",InstanceId,":","已使用：",round(s3['TrafficUsed']/GB,2),"总流量：",round(s3['TrafficPackageTotal']/GB,2),"剩余：",round(s3['TrafficPackageRemaining']/GB,2))
-        #实例流量超出限制自动关闭
+        s3= s2[i]['TrafficPackageSet'][0]
+        InstanceState =s1[i]["InstanceState"]
+        TrafficPackageTotal = round(s3['TrafficPackageTotal']/GB,2)
+        TrafficUsed = round(s3['TrafficUsed']/GB,2)
+        TrafficPackageRemaining=str(round(s3['TrafficPackageRemaining']/GB,2))  
+        #获取实例状态          
+        print (i+1,"：",InstanceId,":","已使用：",TrafficUsed,"总流量：",TrafficPackageTotal,"剩余：",TrafficPackageRemaining)
+        if (InstanceState == "RUNNING"):
+            print("运行中")
+            #实例流量超出限制自动关闭
+            if (TrafficUsed/TrafficPackageTotal<percent):
+                print("剩余流量充足")
+                          
+                
+            else:
+                print(InstanceId,":","流量超出限制，自动关闭")
+                req_Stop = models.StopInstancesRequest()
+                params_Stop = {
 
-        if (round(s3['TrafficUsed']/GB,2)/round(s3['TrafficPackageTotal']/GB,2)<percent):
-            print("剩余流量充足")
+                }
+                params_Stop.setdefault("InstanceIds",[]).append(InstanceId)
+                req_Stop.from_json_string(json.dumps(params_Stop))
+                resp_Stop = client.StopInstances(req_Stop) 
+                print(resp_Stop.to_json_string())
+                #添加TG酱通知
+                msgContent= InstanceId+ " ：流量超出限制，即将自动关机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
+                msgUrl= tgBotUrl + tg_token +"/"+ msgContent
+                response= requests.get(url=msgUrl).text
+                print (response)        
         else:
-            print(InstanceId,":","流量超出限制，自动关闭")
-            req_Stop = models.StopInstancesRequest()
-            params_Stop = {
-
-            }
-            params_Stop.setdefault("InstanceIds",[]).append(InstanceId)
-            req_Stop.from_json_string(json.dumps(params_Stop))
-            resp_Stop = client.StopInstances(req_Stop) 
-            print(resp_Stop.to_json_string())
+            print("已关机")
+        
         #添加时间戳
         print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         print ("--------------------")

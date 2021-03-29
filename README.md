@@ -12,6 +12,9 @@ pip3 install tencentcloud-sdk-python #python3
     SecretKey=""
     region=""
     percent= 0.95
+    tgBotUrl="https://dianbao.vercel.app/send/"
+    tg_token=""
+
 ```
 
 SecretId,SecretKey 请前往腾讯云访问管理控制台获取：https://console.cloud.tencent.com/cam/capi
@@ -35,6 +38,9 @@ region 为服务器所在地域具体参照下表
 [官方文档](https://cloud.tencent.com/document/product/1207/47564#.E5.9C.B0.E5.9F.9F.E5.88.97.E8.A1.A8)
 
 percent为 套餐内已使用流量占比 默认设置为 0.95，超出后自动关机
+tgBotUrl 为tg酱网址，可以考虑[自建](https://github.com/anhao/TgMessage)或者使用现成的[TG酱](https://t.me/tg_jiang_bot)  默认使用TG酱网址
+tg_token 可以向TG酱发送`/mytoken` 获取
+![](https://img.jpggod.com/file/jpggod/2021/03/29/7d488dce8aec13086276be37ff0a9e84.png)
 
 建议搭配crontab使用
 
@@ -47,13 +53,13 @@ crontab -e
 
 ## 输出
 
-![](https://img.jpggod.com/file/jpggod/2021/03/13/4a104b8c8594f54b5a6273ed2249b088.png)
+![](https://img.jpggod.com/file/jpggod/2021/03/29/cd072a6393deac77d09acb6695ea58af.png)
 
 ## 更多功能
 
 - [ ] GitHub Actions版
 - [ ] 腾讯云函数版
 - [ ] server酱推送
-- [ ] TG推送
+- [x] TG推送
 
 博客地址：https://2demo.top/222.html
