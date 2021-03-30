@@ -1,0 +1,37 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: LightHouse_Automatic_Shutdown
+
+on:
+  push:
+    branches: 
+    - githubAction
+  schedule:
+    - cron: "15 * * * *"
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install tencentcloud-sdk-python
+      run: |
+        python -m pip3 install --upgrade pip3
+        pip3 install tencentcloud-sdk-python
+    - name: "run LH.py"
+      env:
+        SecretId: ${{secrets.SecretId}}
+        SecretKey: ${{secrets.SecretKey}}
+        region: ${{secrets.region}}
+        tgBotUrl: ${{secrets.tgBotUrl}}
+        tgToken: ${{secrets.tgToken}}
+      run: |
+        python3 LH.py
