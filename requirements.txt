@@ -1,5 +1,2 @@
-json
-time
-requests
-os
-tencentcloud-sdk-python
+requests==2.24.0
+tencentcloud-sdk-python==3.0.355
