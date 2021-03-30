@@ -25,7 +25,7 @@ jobs:
     - name: Install tencentcloud-sdk-python
       run: |
         python -m pip install --upgrade pip
-        pip install tencentcloud-sdk-python
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: "run LH.py"
       env:
         SecretId: ${{secrets.SecretId}}
@@ -34,4 +34,4 @@ jobs:
         tgBotUrl: ${{secrets.tgBotUrl}}
         tgToken: ${{secrets.tgToken}}
       run: |
-        python3 LH.py
+        python LH.py
