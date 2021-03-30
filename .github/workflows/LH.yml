@@ -6,7 +6,7 @@ name: LightHouse_Automatic_Shutdown
 on:
   push:
     branches: 
-    - githubAction
+    - main
   schedule:
     - cron: "15 * * * *"
 
