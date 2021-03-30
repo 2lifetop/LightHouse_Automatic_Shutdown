@@ -24,8 +24,8 @@ jobs:
         python-version: 3.9
     - name: Install tencentcloud-sdk-python
       run: |
-        python -m pip3 install --upgrade pip3
-        pip3 install tencentcloud-sdk-python
+        python -m pip install --upgrade pip
+        pip install tencentcloud-sdk-python
     - name: "run LH.py"
       env:
         SecretId: ${{secrets.SecretId}}
