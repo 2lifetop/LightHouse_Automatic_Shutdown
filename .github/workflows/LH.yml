@@ -4,6 +4,7 @@
 name: LightHouse_Automatic_Shutdown
 
 on:
+  workflow_dispatch:
   push:
     branches: 
     - main
