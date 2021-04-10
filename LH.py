@@ -10,8 +10,9 @@ from tencentcloud.lighthouse.v20200324 import lighthouse_client, models
 
 SecretId = os.environ["SecretId"]
 SecretKey = os.environ["SecretKey"]
+
 regions = ["ap-beijing", "ap-chengdu", "ap-guangzhou", "ap-hongkong", "ap-nanjing", "ap-shanghai", "ap-singapore", "ap-tokyo", "eu-moscow", "na-siliconvalley"]
-percent = 0.95  # 流量限额，1表示使用到100%关机，默认设置为95%
+percent = 0.02  # 流量限额，1表示使用到100%关机，默认设置为95%
 tgToken = os.environ["tgToken"]
 
 
@@ -92,8 +93,8 @@ def dofetch(id, key, region):
         #添加时间戳
         print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         print ("--------------------")
-except TencentCloudSDKException as err: 
-    print(err) 
+#except TencentCloudSDKException as err: 
+ #   print(err) 
     
 if __name__ == '__main__':
     doCheck()
