@@ -30,8 +30,6 @@ jobs:
       env:
         SecretId: ${{secrets.SecretId}}
         SecretKey: ${{secrets.SecretKey}}
-        region: ${{secrets.region}}
-        tgBotUrl: ${{secrets.tgBotUrl}}
         tgToken: ${{secrets.tgToken}}
       run: |
         python LH.py

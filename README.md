@@ -2,6 +2,26 @@
 腾讯云轻量服务流量超出限制自动关机
 ## 使用方法
 
+## 2021年04月10日更新
+
+人工合并多账户多地域检测代码
+
+代码贡献者：[mosliu](https://github.com/mosliu/LightHouse_Automatic_Shutdown)
+
+配置默认TG酱地址TG酱更改为自建版：[@realtgchat_bot](https://t.me/realtgchat_bot)
+
+目前只需要配置
+
+```
+SecretId #腾讯云api密钥ID 以英文逗号分隔
+
+SecretKey #腾讯云api密钥key 以英文逗号分隔
+
+tgToken #TG酱token
+```
+
+SecretId、SecretKey需要 一 一对应
+
 ## 2021年03月30日更新
 
 新增GitHub Action 实用性大大提升

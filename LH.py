@@ -7,17 +7,35 @@ from tencentcloud.common.profile.client_profile import ClientProfile
 from tencentcloud.common.profile.http_profile import HttpProfile
 from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentCloudSDKException
 from tencentcloud.lighthouse.v20200324 import lighthouse_client, models
-try:
-    #参数
-    SecretId = os.environ["SecretId"]
-    SecretKey = os.environ["SecretKey"]
-    region= os.environ["region"]
-    percent= 0.95 #流量限额，1表示使用到100%关机，默认设置为95%
-    tgBotUrl= os.environ["tgBotUrl"]
-    tgToken= os.environ["tgToken"]
+
+SecretId = os.environ["SecretId"]
+SecretKey = os.environ["SecretKey"]
+regions = ["ap-beijing", "ap-chengdu", "ap-guangzhou", "ap-hongkong", "ap-nanjing", "ap-shanghai",
+           "ap-singapore",
+           "ap-tokyo", "eu-moscow", "na-siliconvalley"]
+percent = 0.95  # 流量限额，1表示使用到100%关机，默认设置为95%
+tgToken = os.environ["tgToken"]
+
+
+def doCheck():
+    try:
+        # 参数
+        ids = SecretId.split(",")
+        keys = SecretKey.split(",")
+        # print(ids)
+
+        for i in range(len(ids)):
+            for ap in regions:
+                dofetch(ids[i], keys[i], ap)
+
+    except TencentCloudSDKException as err:
+        print(err)
+
+
+def dofetch(id, key, region):
 
     # 以下不用管
-    cred = credential.Credential(SecretId,SecretKey)
+    cred = credential.Credential(id, key)
     httpProfile = HttpProfile()
     httpProfile.endpoint = "lighthouse.tencentcloudapi.com"
 
@@ -67,7 +85,7 @@ try:
                 print(resp_Stop.to_json_string())
                 #添加TG酱通知
                 msgContent= InstanceId+ " ：流量超出限制，即将自动关机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
-                msgUrl= tgBotUrl + tgToken +"/"+ msgContent
+                msgUrl="https://tgbot-red.vercel.app/api?token=api?token="+ tgToken +"&message="+ msgContent
                 response= requests.get(url=msgUrl).text
                 print (response)        
         else:
@@ -78,3 +96,8 @@ try:
         print ("--------------------")
 except TencentCloudSDKException as err: 
     print(err) 
+    
+if __name__ == '__main__':
+    doCheck()
+    # ck_kafka()
+    pass
