@@ -94,8 +94,8 @@ def dofetch(id, key, region):
         #添加时间戳
         print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         print ("--------------------")
-except TencentCloudSDKException as err: 
-    print(err) 
+#except TencentCloudSDKException as err: 
+ #   print(err) 
     
 #if __name__ == '__main__':
 #    doCheck()
