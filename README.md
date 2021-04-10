@@ -17,7 +17,7 @@ SecretId #腾讯云api密钥ID 以英文逗号分隔
 
 SecretKey #腾讯云api密钥key 以英文逗号分隔
 
-tgToken #TG酱token
+tgToken #TG酱token 最好加上引号""
 ```
 
 SecretId、SecretKey需要 一 一对应

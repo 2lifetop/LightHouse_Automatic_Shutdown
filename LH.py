@@ -10,9 +10,7 @@ from tencentcloud.lighthouse.v20200324 import lighthouse_client, models
 
 SecretId = os.environ["SecretId"]
 SecretKey = os.environ["SecretKey"]
-regions = ["ap-beijing", "ap-chengdu", "ap-guangzhou", "ap-hongkong", "ap-nanjing", "ap-shanghai",
-           "ap-singapore",
-           "ap-tokyo", "eu-moscow", "na-siliconvalley"]
+regions = ["ap-beijing", "ap-chengdu", "ap-guangzhou", "ap-hongkong", "ap-nanjing", "ap-shanghai", "ap-singapore", "ap-tokyo", "eu-moscow", "na-siliconvalley"]
 percent = 0.95  # 流量限额，1表示使用到100%关机，默认设置为95%
 tgToken = os.environ["tgToken"]
 
@@ -85,7 +83,7 @@ def dofetch(id, key, region):
                 print(resp_Stop.to_json_string())
                 #添加TG酱通知
                 msgContent= InstanceId+ " ：流量超出限制，即将自动关机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
-                msgUrl="https://tgbot-red.vercel.app/api?token=api?token="+ tgToken +"&message="+ msgContent
+                msgUrl="https://tgbot-red.vercel.app/api?token="+ tgToken +"&message="+ msgContent
                 response= requests.get(url=msgUrl).text
                 print (response)        
         else:
