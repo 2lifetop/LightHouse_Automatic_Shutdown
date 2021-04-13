@@ -1,131 +1,103 @@
-# LightHouse_Automatic_Shutdown
-腾讯云轻量服务流量超出限制自动关机
+# 流量超标自动关机脚本——超详细版
+
 ## 使用方法
 
-## 2021年04月10日更新
+### 1、简介
 
-人工合并多账户多地域检测代码
+本脚本为腾讯云轻量服务器的流量监控脚本，可以定时监控多账户多地域多机器的流量使用情况，当已使用流量占总流量的百分比达到设定值（默认为95%）时会自动发出关机请求，避免流量超标，产生不必要的费用。
 
-代码贡献者：[mosliu](https://github.com/mosliu/LightHouse_Automatic_Shutdown)
+### 2、获取腾讯云API密钥
 
-配置默认TG酱地址TG酱更改为自建版：[@realtgchat_bot](https://t.me/realtgchat_bot)
+由于需要对腾讯云账号内的轻量服务器进行查询关机等操作，所以需要申请腾讯云API密钥。
 
-目前只需要配置
+先登录上腾讯云官网，然后点开下面这个链接：https://console.cloud.tencent.com/cam/capi
+
+进入API密钥管理页面。
+
+![](https://img.jpggod.com/file/jpggod/2021/04/13/c7722a3024b8aef6261497c189b402a2.png)
+
+![](https://img.jpggod.com/file/jpggod/2021/04/13/9fa17baacdf6e973aa65ab94f185be9c.png)
+
+保存SecretId、SecretKey
+
+### 3、获取TG酱 token（用于通知关机信息）
+
+TG酱依托于目前海外最流行之一的即时通讯软件Telegram（以下简称TG），如果你想启用改功能请申请一个账号 https://telegram.org/
+
+然后在浏览器中点击 [@realtgchat_bot](https://t.me/realtgchat_bot)
+
+或者在TG搜索
+
+![](https://img.jpggod.com/file/jpggod/2021/04/13/bac97456a2769cbf505b8dc7a842b5da.png)
+
+点击start后输入`/token` 机器人返回的值就是你的账号token
+
+![](https://img.jpggod.com/file/jpggod/2021/04/13/c700a0744b48777ffcbe93d41ecb2f2b.png)
+
+记下这个token
+
+### 4、部署至GitHub Action
+
+**4.1、fork项目**
+
+由于需要使用自己的API密钥以及GitHub Action所以请务必先FORK本项目
+
+![](https://img.jpggod.com/file/jpggod/2021/04/13/3193dd14526335de1a045751861849eb.png)
+
+fork完之后接下来的操作请在自己账号下的刚fork的repository下进行操作
+
+**4.2、添加密钥**
+
+项目中按照 Setting--Secrets--New repository secert的顺序添加secrets
+
+![](https://img.jpggod.com/file/jpggod/2021/03/30/7f88ec3aad0086502029348ebd3ee962.png)
+
+依次添加之前保存的三个值
 
 ```
 SecretId #腾讯云api密钥ID 以英文逗号分隔
 
 SecretKey #腾讯云api密钥key 以英文逗号分隔
 
-tgToken #TG酱token 最好加上引号""
+tgToken #TG酱token 加上引号""
 ```
 
-SecretId、SecretKey需要 一 一对应
+多账户需要注意腾讯云账号密钥的ID 和KEY的顺序，不能乱，单账号直接复制粘贴即可，另外TG酱Token需要加上英文引号。添加后密钥显示名称会统一更换为大写字母。
 
-## 2021年03月30日更新
+![](https://img.jpggod.com/file/jpggod/2021/04/13/132c216968650da0a29cda75988e1f17.png)
 
-新增GitHub Action 实用性大大提升
+依次添加完成即可。
 
-只需要添加Secrets即可使用，添加方法
+### 效果检验
 
-先fork本项目至自己的GitHub账号
+![](https://img.jpggod.com/file/jpggod/2021/04/13/96119564208093f62d3d64564885977a.png)
 
-项目 Setting--Secrets--New repository secert
+![](https://img.jpggod.com/file/jpggod/2021/04/13/6fd1cdb7d1c71a8063c560cfcc8252db.png)
 
-![](https://img.jpggod.com/file/jpggod/2021/03/30/7f88ec3aad0086502029348ebd3ee962.png)
+点击build就可以看到输出日志了
 
+![](https://img.jpggod.com/file/jpggod/2021/04/13/280fb13953d531e067222289e75f8fb2.png)
 
+## 详细配置修改
 
-```
-SecretId #腾讯云api密钥ID 
+流量百分比可以在LH.py中修改
 
-SecretKey #腾讯云api密钥key 
+![](https://img.jpggod.com/file/jpggod/2021/04/13/81056afbdf1cb6c3b9b4c1cb479bd37d.png)
 
-region #轻量服务器所在地域
+如果自建TG消息机器人也可以在该文件中修改。
 
-tgBotUrl #TG酱url
+![](https://img.jpggod.com/file/jpggod/2021/04/13/bcbd0a2fa37ac48d9d7793f44bab78d1.png)
 
-tgToken #TG酱token
-```
-
-**获取地址**
-
-SecretId、SecretKey ：https://console.cloud.tencent.com/cam/capi
-
-region：[官方文档](https://cloud.tencent.com/document/product/1207/47564#.E5.9C.B0.E5.9F.9F.E5.88.97.E8.A1.A8)
-
-tgBotUrl：为tg酱网址，可以考虑[自建](https://github.com/anhao/TgMessage)或者使用现成的[TG酱](https://t.me/tg_jiang_bot) 
-tg_token： 可以向TG酱发送`/mytoken` 获取
-
-默认设置为流量达到95%自动关机，并向用户发出TG通知，可在LH.py文件中修改 percent 参数，数值0-1之间
+更改运行频率
 
 默认每小时运行一次 想要修改频率可以修改 .github/workflows/LH.yml中schedule的cron参数，具体使用方法可以前往 [crontab使用方法](https://2demo.top/231.html)查看
 
+![](https://img.jpggod.com/file/jpggod/2021/04/13/d4b5535109e4e1dba8d6a682363581b1.png)
 
+AD:
 
-# 服务器运行
+腾讯云轻量购买地址：
 
-### 安装腾讯云Python SDK 3.0
-```
-pip3 install tencentcloud-sdk-python #python3
-```
-### 参数
+288即可享受 1C1G30M香港高速CN2GIA服务器：https://curl.qcloud.com/ZYwQKs3G
 
-```
-    SecretId=""
-    SecretKey=""
-    region=""
-    percent= 0.95
-    tgBotUrl="https://dianbao.vercel.app/send/"
-    tgToken=""
-
-```
-
-SecretId,SecretKey 请前往腾讯云访问管理控制台获取：https://console.cloud.tencent.com/cam/capi
-
-![](https://img.jpggod.com/file/jpggod/2021/03/13/0b27e56b61dc83fcb881dc39a2747e8d.png)
-
-region 为服务器所在地域具体参照下表
-
-| 华北地区(北京)       | ap-beijing       |
-| -------------------- | ---------------- |
-| 西南地区(成都)       | ap-chengdu       |
-| 华南地区(广州)       | ap-guangzhou     |
-| 港澳台地区(中国香港) | ap-hongkong      |
-| 华东地区(南京)       | ap-nanjing       |
-| 华东地区(上海)       | ap-shanghai      |
-| 亚太东南(新加坡)     | ap-singapore     |
-| 亚太东北(东京)       | ap-tokyo         |
-| 欧洲地区(莫斯科)     | eu-moscow        |
-| 美国西部(硅谷)       | na-siliconvalley |
-
-[官方文档](https://cloud.tencent.com/document/product/1207/47564#.E5.9C.B0.E5.9F.9F.E5.88.97.E8.A1.A8)
-
-percent为 套餐内已使用流量占比 默认设置为 0.95，超出后自动关机
-tgBotUrl 为tg酱网址，可以考虑[自建](https://github.com/anhao/TgMessage)或者使用现成的[TG酱](https://t.me/tg_jiang_bot)  默认使用TG酱网址
-tg_token 可以向TG酱发送`/mytoken` 获取
-![](https://img.jpggod.com/file/jpggod/2021/03/29/7d488dce8aec13086276be37ff0a9e84.png)
-
-建议搭配crontab使用
-
-如设置每个小时15分运行一次程序
-
-```
-crontab -e
-15 * * * * /usr/bin/python3 /root/LightHouse_Automatic_Shutdown/LH.py >> /root/LightHouse_Automatic_Shutdown/LH.log 2>&1
-```
-
-## 输出
-
-![](https://img.jpggod.com/file/jpggod/2021/03/29/cd072a6393deac77d09acb6695ea58af.png)
-TG酱
-![](https://img.jpggod.com/file/jpggod/2021/03/29/5bc2de7b70e91cf7e1bda802c91ff325.png)
-
-## 更多功能
-
-- [x] GitHub Actions版
-- [ ] 腾讯云函数版
-- [ ] server酱推送
-- [x] TG推送
-
-博客地址：https://2demo.top/222.html
+热门活动还能折上折，详情联系QQ：3502399883
