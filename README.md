@@ -101,3 +101,9 @@ AD:
 288即可享受 1C1G30M香港高速CN2GIA服务器：https://curl.qcloud.com/ZYwQKs3G
 
 热门活动还能折上折，详情联系QQ：3502399883
+
+## 赞助：
+
+![](https://www.vx.link/favicon.ico)
+
+[微林](https://www.vx.link/)：提供数款效率工具，帮助您更专注于本质。
