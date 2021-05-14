@@ -10,10 +10,10 @@ from tencentcloud.lighthouse.v20200324 import lighthouse_client, models
 
 SecretId = os.environ["SecretId"]
 SecretKey = os.environ["SecretKey"]
-SCTKEY = os.environ["SCTKEY"]
 
 regions = ["ap-beijing", "ap-chengdu", "ap-guangzhou", "ap-hongkong", "ap-nanjing", "ap-shanghai", "ap-singapore", "ap-tokyo", "eu-moscow", "na-siliconvalley"]
-percent = 0.90  # 流量限额，1表示使用到100%关机，默认设置为95%
+percent = 0.95  # 流量限额，1表示使用到100%关机，默认设置为95%
+tgToken = os.environ["tgToken"]
 
 
 def doCheck():
@@ -82,9 +82,9 @@ def dofetch(id, key, region):
                 req_Stop.from_json_string(json.dumps(params_Stop))
                 resp_Stop = client.StopInstances(req_Stop) 
                 print(resp_Stop.to_json_string())
-                #server酱企业微信通知
-                msgContent= InstanceId+ " ：尊敬的管理员，轻量云服务器流量超出限制，即将自动关机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
-                msgUrl="https://sctapi.ftqq.com/" + SCTKEY + ".send?title=轻量云服务器消息提示&desp=" + msgContent
+                #添加TG酱通知
+                msgContent= InstanceId+ " ：流量超出限制，即将自动关机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
+                msgUrl="https://tgbot-red.vercel.app/api?token="+ tgToken +"&message="+ msgContent
                 response= requests.get(url=msgUrl).text
                 print (response)        
         else:
