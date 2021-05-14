@@ -13,7 +13,7 @@ SecretKey = os.environ["SecretKey"]
 
 regions = ["ap-beijing", "ap-chengdu", "ap-guangzhou", "ap-hongkong", "ap-nanjing", "ap-shanghai", "ap-singapore", "ap-tokyo", "eu-moscow", "na-siliconvalley"]
 percent = 0.90  # 流量限额，1表示使用到100%关机，默认设置为95%
-posturl = os.environ["posturl"]
+posturl = os.environ["myurl"]
 
 
 def doCheck():
@@ -84,7 +84,7 @@ def dofetch(id, key, region):
                 print(resp_Stop.to_json_string())
                 #server酱企业微信通知
                 msgContent= InstanceId+ " ：尊敬的管理员，轻量云服务器流量超出限制，即将自动关机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
-                msgUrl=posturl + "?title=轻量云服务器消息提示" + "&description=" + msgContent
+                msgUrl=myurl + "?title=轻量云服务器消息提示" + "&description=" + msgContent
                 response= requests.get(url=msgUrl).text
                 print (response)        
         else:
