@@ -32,5 +32,6 @@ jobs:
         SecretId: ${{secrets.SecretId}}
         SecretKey: ${{secrets.SecretKey}}
         tgToken: ${{secrets.tgToken}}
+        SCTKEY: ${{secrets.SCTKEY}}
       run: |
         python LH.py
