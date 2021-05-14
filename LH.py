@@ -13,7 +13,6 @@ SecretKey = os.environ["SecretKey"]
 
 regions = ["ap-beijing", "ap-chengdu", "ap-guangzhou", "ap-hongkong", "ap-nanjing", "ap-shanghai", "ap-singapore", "ap-tokyo", "eu-moscow", "na-siliconvalley"]
 percent = 0.90  # 流量限额，1表示使用到100%关机，默认设置为95%
-posturl = os.environ["myurl"]
 
 
 def doCheck():
