@@ -84,10 +84,10 @@ def dofetch(id, key, region):
                 print(resp_Stop.to_json_string())
                 #server酱企业微信通知
                 msgContent= InstanceId+ " ：尊敬的管理员，轻量云服务器流量超出限制，即将自动关机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
-                msgUrl1="https://sctapi.ftqq.com/"+ sctkey +".send?title=轻量云服务器消息提示&desp="+ msgContent
+                msgUrl="https://sctapi.ftqq.com/"+ sctkey +".send?title=轻量云服务器消息提示&desp="+ msgContent
                 #添加TG酱通知
-                msgContent= InstanceId+ " ：轻量云服务器流量超出限制，即将自动关机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
-                msgUrl="https://dianbao.vercel.app/send/"+ tgToken +"/"+ msgContent
+                #msgContent= InstanceId+ " ：轻量云服务器流量超出限制，即将自动关机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
+                #msgUrl="https://dianbao.vercel.app/send/"+ tgToken +"/"+ msgContent
                 response= requests.get(url=msgUrl).text
                 print (response)        
         else:
