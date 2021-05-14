@@ -31,6 +31,6 @@ jobs:
       env:
         SecretId: ${{secrets.SecretId}}
         SecretKey: ${{secrets.SecretKey}}
-        tgToken: ${{secrets.tgToken}}
+        MyUrl: ${{secrets.myurl}}
       run: |
         python LH.py
