@@ -31,6 +31,6 @@ jobs:
       env:
         SecretId: ${{secrets.SecretId}}
         SecretKey: ${{secrets.SecretKey}}
-        SCTKEY: ${{secrets.SCTKEY}}
+        tgToken: ${{secrets.tgToken}}
       run: |
         python LH.py
