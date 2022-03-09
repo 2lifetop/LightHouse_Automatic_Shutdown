@@ -16,7 +16,7 @@ SecretId = os.environ["SecretId"]
 SecretKey = os.environ["SecretKey"]
 
 regions = ["ap-beijing", "ap-chengdu", "ap-guangzhou", "ap-hongkong", "ap-nanjing", "ap-shanghai", "ap-singapore", "ap-tokyo", "eu-moscow", "na-siliconvalley"]
-percent = 0.80  # 流量限额，1表示使用到100%关机，默认设置为95%
+percent = 0.95  # 流量限额，1表示使用到100%关机，默认设置为95%
 tgToken = os.environ["tgToken"]
 
 #钉钉机器人告警   
@@ -120,8 +120,26 @@ def dofetch(id, key, region):
                 response= requests.get(url=msgUrl).text
                 print (response)        
         else:
-            gaojinSatus="流量告警状态：已关机!"
-            print("已关机")
+            if (TrafficUsed/TrafficPackageTotal<percent):
+                #告警结果：
+                print("剩余流量充足，将自动开机")
+                req_Start = models.StartInstancesRequest()
+                params_Start = {
+                    "InstanceIds": [InstanceId]
+                }
+                req_Start.from_json_string(json.dumps(params_Start))
+                resp_Start = client.StartInstances(req_Start)
+                print(resp_Start.to_json_string())
+                #添加TG酱通知
+                msgContent= InstanceId+ " ：流量有剩余，即将自动开机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
+                msgUrl="https://tgbot-red.vercel.app/api?token="+ tgToken +"&message="+ msgContent
+                #告警结果：
+                gaojinResult="流量告警结果：流量有剩余，即将自动开机。\n"+"剩余流量：" + str(TrafficPackageRemaining)+ "GB"
+                response= requests.get(url=msgUrl).text
+                print (response)
+            else:
+                gaojinSatus="流量告警状态：已关机!"
+                print("流量告警状态：已关机!")
         
         #添加时间戳
         print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
@@ -133,6 +151,6 @@ if __name__ == '__main__':
      doCheck()
      gaojinTime="流量告警时间："+time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"\n"+"\n"
      gaojin=gaojinData+"\n"+"\n"+gaojinSatus+"\n"+"\n"+gaojinResult+"\n"+"\n"+gaojinTime
-     sendmessage(gaojin)
+     #sendmessage(gaojin)
     # ck_kafka()
      pass
