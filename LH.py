@@ -114,7 +114,7 @@ def dofetch(id, key, region):
                 print(resp_Stop.to_json_string())
                 #添加TG酱通知
                 msgContent= InstanceId+ " ：流量超出限制，即将自动关机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
-                msgUrl="https://tgbot-red.vercel.app/api?token="+ tgToken +"&message="+ msgContent
+                msgUrl="https://gt-git-main-chinamining-eth.vercel.app/api?token="+ tgToken +"&message="+ msgContent
                 #告警结果：
                 gaojinResult="流量告警结果：流量超出限制，即将自动关机。\n"+"剩余流量：" + str(TrafficPackageRemaining)+ "GB"
                 response= requests.get(url=msgUrl).text
@@ -132,7 +132,7 @@ def dofetch(id, key, region):
                 print(resp_Start.to_json_string())
                 #添加TG酱通知
                 msgContent= InstanceId+ " ：流量有剩余，即将自动开机。" + "剩余流量：" + TrafficPackageRemaining+ "GB"
-                msgUrl="https://tgbot-red.vercel.app/api?token="+ tgToken +"&message="+ msgContent
+                msgUrl="https://gt-git-main-chinamining-eth.vercel.app/api?token="+ tgToken +"&message="+ msgContent
                 #告警结果：
                 gaojinResult="流量告警结果：流量有剩余，即将自动开机。\n"+"剩余流量：" + str(TrafficPackageRemaining)+ "GB"
                 response= requests.get(url=msgUrl).text
