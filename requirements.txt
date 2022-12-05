@@ -1,2 +1,2 @@
 requests==2.27.1
-tencentcloud-sdk-python==3.0.659
+tencentcloud-sdk-python==3.0.786
